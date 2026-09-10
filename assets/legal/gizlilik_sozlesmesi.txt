@@ -1,0 +1,87 @@
+GİZLİLİK SÖZLEŞMESİ (NDA)
+
+Taslak metin — tarafların ve proje bilgilerinin doldurulması gerekir.
+
+Bu Gizlilik Sözleşmesi (“Sözleşme”), aşağıda bilgileri yer alan taraflar arasında; taraflardan birinin diğerine proje, yazılım, ticari faaliyet, müşteri, kullanıcı, finans, teknik altyapı veya benzeri konularda aktardığı bilgilerin korunması amacıyla düzenlenmiştir.
+
+# 1. Taraflar
+
+Bilgiyi Açıklayan Taraf: [Ad Soyad / Şirket Unvanı], [Adres], [E-posta].
+
+Bilgiyi Alan Taraf: [Ad Soyad / Şirket Unvanı], [Adres], [E-posta].
+
+Taraflar birlikte “Taraflar”, ayrı ayrı “Taraf” olarak anılacaktır.
+
+# 2. Amaç ve Kapsam
+
+Sözleşmenin amacı, taraflar arasında paylaşılan gizli bilgilerin yalnızca kararlaştırılan iş/proje amacıyla kullanılmasını, yetkisiz kişilere açıklanmamasını ve makul güvenlik tedbirleriyle korunmasını sağlamaktır. Bu metin, tek yönlü veya karşılıklı gizlilik ilişkisine uygulanabilecek şekilde hazırlanmış bir taslaktır.
+
+# 3. Gizli Bilginin Tanımı
+
+“Gizli Bilgi”; yazılı, sözlü, elektronik, görsel veya başka herhangi bir yöntemle açıklanan ve niteliği gereği gizli olduğu makul olarak anlaşılabilecek her türlü bilgi ve belgeyi ifade eder. Buna; kaynak kodları, API anahtarları ve erişim bilgileri, mimari ve teknik dokümanlar, algoritmalar, veritabanı yapıları, tasarımlar, prototipler, yol haritaları, fiyatlandırma, mali bilgiler, iş planları, müşteri ve kullanıcı bilgileri, sözleşmeler, teklif ve görüşmeler, güvenlik yöntemleri, ticari sırlar, know-how ve proje içeriği dahildir.
+
+# 4. Gizli Sayılmayan Bilgiler
+
+- Alan Tarafın kusuru olmaksızın kamuya açık hale gelmiş bilgiler.
+
+- Alan Tarafın bilgiyi almadan önce hukuka uygun şekilde sahip olduğunu ispatlayabildiği bilgiler.
+
+- Üçüncü bir kişiden, gizlilik yükümlülüğü ihlal edilmeden hukuka uygun biçimde edinilen bilgiler.
+
+- Alan Tarafın Gizli Bilgiyi kullanmadan bağımsız olarak geliştirdiğini yazılı kayıtlarla gösterebildiği bilgiler.
+
+- Kanunen veya yetkili makam kararıyla açıklanması zorunlu olan bilgiler; ancak mümkün olduğu ölçüde açıklama öncesinde Bilgiyi Açıklayan Tarafa bildirim yapılır.
+
+# 5. Alan Tarafın Yükümlülükleri
+
+- Gizli Bilgiyi yalnızca belirlenen proje/iş amacı doğrultusunda kullanmak.
+
+- Gizli Bilgiyi üçüncü kişilere izinsiz olarak açıklamamak, yayımlamamak veya devretmemek.
+
+- Gizli Bilgiye erişimi, yalnızca işin gereği olarak erişmesi gereken kişilerle sınırlamak ve bu kişilerin de uygun gizlilik yükümlülüklerine tabi olmasını sağlamak.
+
+- Şifre, erişim anahtarı, dosya ve sistem güvenliği bakımından makul teknik ve idari önlemleri almak.
+
+- Gizli Bilginin kaybolması, çalınması, yanlış kişiye gönderilmesi veya yetkisiz erişim şüphesi halinde gecikmeksizin diğer Tarafa haber vermek.
+
+- Gizli Bilgiyi kopyalamayı yalnızca iş için gerekli ölçüde yapmak.
+
+# 6. Kişisel Veriler
+
+Tarafların kişisel veri işlemesi halinde yürürlükteki kişisel veri mevzuatına, özellikle uygulanabildiği ölçüde 6698 sayılı Kişisel Verilerin Korunması Kanunu’na ve ilgili ikincil düzenlemelere uyulacaktır. Taraflar, kişisel verileri yalnızca hukuka uygun amaçlarla ve gerekli olduğu ölçüde işler.
+
+# 7. Mülkiyet ve Lisans
+
+Gizli Bilginin açıklanması, aksi ayrıca yazılı olarak kararlaştırılmadıkça, Alan Tarafa herhangi bir fikrî mülkiyet hakkı, lisans, mülkiyet veya kullanım hakkı devretmez. Gizli Bilgi üzerindeki haklar ilgili hak sahibinde kalır.
+
+# 8. İade ve İmha
+
+Bilgiyi Açıklayan Tarafın yazılı talebi veya projenin sona ermesi üzerine Alan Taraf, hukuken saklanması zorunlu olmayan Gizli Bilgileri ve makul ölçüde bunların kopyalarını iade eder veya imha eder. Yedekleme sistemlerinde kalan kopyalar, olağan silme döngüsü içinde ve bu Sözleşmedeki gizlilik yükümlülükleri korunarak silinir.
+
+# 9. Süre
+
+Bu Sözleşme [başlangıç tarihi] tarihinde yürürlüğe girer. Gizlilik yükümlülükleri, Sözleşmenin sona ermesinden sonra [3/5] yıl devam eder. Ticari sır niteliğindeki bilgiler bakımından yükümlülük, ilgili bilginin ticari sır niteliğini koruduğu sürece devam eder; uygulanacak hukuk aksini gerektirmedikçe.
+
+# 10. İhlal ve Sorumluluk
+
+Taraflardan birinin bu Sözleşmeyi ihlal etmesi halinde, diğer Taraf doğan zararlarının tazminini ve uygulanabilir hukuk çerçevesindeki diğer haklarını talep edebilir. Taraflar, ihlalin niteliğine göre tedbir, erişimin durdurulması, bilginin iadesi/imhası ve diğer yasal başvuruların mümkün olabileceğini kabul eder.
+
+# 11. Yetkili Hukuk ve Uyuşmazlık
+
+Bu Sözleşmeye uygulanacak hukuk [Türkiye Cumhuriyeti hukuku / başka hukuk] olarak belirlenmiştir. Uyuşmazlıklarda [şehir] mahkemeleri ve icra daireleri [münhasıran / yetki kuralları çerçevesinde] yetkilidir. Taraflar, emredici hukuk kurallarının saklı olduğunu kabul eder.
+
+# 12. Çeşitli Hükümler
+
+- Değişiklikler yazılı olarak ve Tarafların onayıyla yapılır.
+
+- Bir hükmün geçersiz olması diğer hükümlerin geçerliliğini etkilemez.
+
+- Bu Sözleşme, Tarafların gizlilik konusundaki mutabakatının tamamını ifade eder; ancak ayrıca imzalanan sözleşmelerdeki daha sıkı gizlilik hükümleri varsa bunlar saklıdır.
+
+- Bildirim adresleri Tarafların yukarıda belirttiği iletişim bilgileridir; adres değişiklikleri yazılı olarak bildirilir.
+
+# 13. Onay
+
+Taraflar, Sözleşmeyi okuyup anladıklarını, hükümleri serbest iradeleriyle kabul ettiklerini ve imza tarihinden itibaren belirtilen yükümlülüklere uyacaklarını kabul eder.
+
+Tarih: ____ / ____ / ______
