@@ -1,4 +1,4 @@
-package com.epheyt.ephnote
+package com.furkan.myapp
 
 import io.flutter.embedding.android.FlutterActivity
 

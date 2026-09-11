@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "421884726252",
+    "project_id": "not-f8e32",
+    "storage_bucket": "not-f8e32.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421884726252:android:48313a79b945c125098ec9",
+        "android_client_info": {
+          "package_name": "com.furkan.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYsR2SnAMW7ljs2teDUbd9jPfsRYdCy6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
