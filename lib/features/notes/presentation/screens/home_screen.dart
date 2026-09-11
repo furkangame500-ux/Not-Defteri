@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/theme_cubit.dart';
+import '../../../../core/widgets/banner_ad_widget.dart';
 import '../pages/notes_list_page.dart';
 import '../pages/folders_page.dart';
 import '../pages/graph_page.dart';
@@ -37,7 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
         : AppColors.lightSurface;
 
     return Scaffold(
-      body: IndexedStack(index: _selectedIndex, children: _pages),
+      body: Column(
+        children: [
+          Expanded(
+            child: IndexedStack(index: _selectedIndex, children: _pages),
+          ),
+          const BannerAdWidget(),
+        ],
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: surfaceColor,

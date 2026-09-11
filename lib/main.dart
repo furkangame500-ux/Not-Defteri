@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'core/constants/app_constants.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_cubit.dart';
 import 'core/locale/locale_cubit.dart';
 import 'core/security/security_cubit.dart';
 import 'core/services/notification_service.dart';
+import 'core/services/ad_service.dart';
 import 'features/notes/data/datasources/note_local_data_source.dart';
 import 'features/notes/data/datasources/folder_local_data_source.dart';
 import 'features/notes/data/repositories/note_repository_impl.dart';
@@ -24,9 +26,21 @@ import 'features/notes/presentation/pages/lock_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Bildirim servisini başlat
-  await NotificationService().initialize();
-  await NotificationService().requestPermission();
+  // Firebase'i başlat (oturum açma / bulut yedekleme için gerekli).
+  // Bu, kullanıcı etkileşimi beklemeyen hızlı, yerel bir çağrıdır — bu
+  // yüzden bildirim izni hatasının aksine ekranı beyazda bekletmez.
+  // google-services.json / GoogleService-Info.plist henüz eklenmediyse
+  // uygulamanın çökmemesi için try/catch ile sarmalandı; bu durumda
+  // sadece oturum açma özellikleri çalışmaz, uygulamanın geri kalanı
+  // normal şekilde çalışmaya devam eder.
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    debugPrint(
+      'Firebase başlatılamadı (google-services.json / '
+      'GoogleService-Info.plist eklenmiş mi kontrol edin): $e',
+    );
+  }
 
   // SharedPreferences başlat
   final prefs = await SharedPreferences.getInstance();
@@ -45,6 +59,15 @@ void main() async {
       folderRepository: folderRepository,
     ),
   );
+
+  // Bildirim servisi ve reklam SDK'sı, arayüz zaten çizildikten SONRA
+  // arka planda başlatılır. Bunları runApp'ten önce await etmek (özellikle
+  // bildirim izni diyaloğunu beklemek), kullanıcı diyaloğa yanıt verene
+  // kadar ekranın bomboş/beyaz görünmesine sebep oluyordu.
+  NotificationService().initialize().then((_) {
+    NotificationService().requestPermission();
+  });
+  AdService.initialize();
 }
 
 class MyApp extends StatefulWidget {

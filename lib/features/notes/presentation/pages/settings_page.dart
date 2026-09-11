@@ -2,8 +2,11 @@ import 'package:epheproject/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/theme_cubit.dart';
+import '../../../../core/services/auth_service.dart';
+import 'account_page.dart';
 import 'trash_page.dart';
 import 'about_page.dart';
 import 'language_page.dart';
@@ -26,6 +29,45 @@ class SettingsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // Hesap bölümü
+          _buildSectionTitle(context, 'Hesap'),
+          const SizedBox(height: 12),
+          StreamBuilder<User?>(
+            stream: AuthService.instance.authStateChanges,
+            builder: (context, snapshot) {
+              final user = snapshot.data;
+              return _buildSettingsCard(
+                context,
+                isDark,
+                children: [
+                  _buildSettingsItem(
+                    context,
+                    icon: CupertinoIcons.person_crop_circle_fill,
+                    iconColor: AppColors.primary,
+                    title: user == null ? 'Oturum Aç' : (user.email ?? 'Hesabım'),
+                    subtitle: user == null
+                        ? 'Notlarını yedeklemek için giriş yap'
+                        : 'Hesabını ve bulut yedeğini yönet',
+                    trailing: const Icon(
+                      CupertinoIcons.chevron_right,
+                      size: 20,
+                      color: Colors.grey,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => const AccountPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
+
+          const SizedBox(height: 24),
+
           // Tema ayarları bölümü
           _buildSectionTitle(context, l10n.appearance),
           const SizedBox(height: 12),

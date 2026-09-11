@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-4612504640509981~1798193556</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Bu bilgi, sana daha ilgili reklamlar göstermek için kullanılacaktır.</string>
 </dict>
 </plist>
