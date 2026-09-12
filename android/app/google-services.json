@@ -12,7 +12,20 @@
           "package_name": "com.furkan.myapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "421884726252-4gecsi7lo03ofkv16evie8o9n53eog2f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.furkan.myapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d54783a411213c0999999"
+          }
+        },
+        {
+          "client_id": "421884726252-sf12vntt1uri9tdq6hp01lover957kdm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAYsR2SnAMW7ljs2teDUbd9jPfsRYdCy6E"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421884726252-sf12vntt1uri9tdq6hp01lover957kdm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

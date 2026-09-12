@@ -76,4 +76,19 @@ class CloudBackupService {
     await _storage.ref(_pathForUser(user.uid)).writeToFile(localFile);
     return backupService.restoreBackup(localFile.path);
   }
+
+  /// Bu hesaba ait bulut yedeğini kalıcı olarak siler. Yerel verilere
+  /// dokunmaz, sadece bulutta saklanan kopyayı kaldırır.
+  Future<void> deleteBackup() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      throw StateError('Yedeği silmek için önce oturum açmalısınız.');
+    }
+    try {
+      await _storage.ref(_pathForUser(user.uid)).delete();
+    } on FirebaseException catch (e) {
+      // Zaten yoksa hata sayılmaz.
+      if (e.code != 'object-not-found') rethrow;
+    }
+  }
 }

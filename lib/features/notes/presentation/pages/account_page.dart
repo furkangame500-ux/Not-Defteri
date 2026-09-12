@@ -171,6 +171,98 @@ class _SignedInViewState extends State<_SignedInView> {
     await AuthService.instance.signOut();
   }
 
+  Future<void> _deleteCloudData() async {
+    final confirmed = await _confirm(
+      title: 'Bilgilerimi Sil',
+      message:
+          'Bu hesaba ait buluttaki yedek kalıcı olarak silinecek. '
+          'Bu cihazdaki notların etkilenmeyecek. Devam edilsin mi?',
+      confirmLabel: 'Sil',
+    );
+    if (!confirmed) return;
+
+    setState(() {
+      _isBusy = true;
+      _statusMessage = null;
+    });
+    try {
+      final cloud = await CloudBackupService.forCurrentDevice();
+      await cloud.deleteBackup();
+      setState(() {
+        _statusMessage = 'Bulutta saklanan bilgilerin silindi.';
+        _isSuccess = true;
+      });
+    } catch (e) {
+      setState(() {
+        _statusMessage = 'Silme işlemi başarısız oldu: $e';
+        _isSuccess = false;
+      });
+    } finally {
+      if (mounted) setState(() => _isBusy = false);
+    }
+  }
+
+  Future<void> _deleteAccount() async {
+    final confirmed = await _confirm(
+      title: 'Hesabı Sil',
+      message:
+          'Hesabın ve buluttaki tüm yedeklerin kalıcı olarak silinecek. '
+          'Bu işlem GERİ ALINAMAZ. Devam edilsin mi?',
+      confirmLabel: 'Hesabı Sil',
+    );
+    if (!confirmed) return;
+
+    setState(() {
+      _isBusy = true;
+      _statusMessage = null;
+    });
+    try {
+      // Önce bulut yedeğini, ardından hesabın kendisini sil.
+      try {
+        final cloud = await CloudBackupService.forCurrentDevice();
+        await cloud.deleteBackup();
+      } catch (_) {
+        // Yedek zaten yoksa veya silinemiyorsa hesap silmeyi engellemesin.
+      }
+      await AuthService.instance.deleteAccount();
+      // Bu noktada oturum kapanmış olur; authStateChanges dinleyicisi
+      // otomatik olarak giriş ekranına döner.
+    } catch (e) {
+      setState(() {
+        _statusMessage = AuthService.messageForError(e);
+        _isSuccess = false;
+      });
+    } finally {
+      if (mounted) setState(() => _isBusy = false);
+    }
+  }
+
+  Future<bool> _confirm({
+    required String title,
+    required String message,
+    required String confirmLabel,
+  }) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Vazgeç'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: Text(confirmLabel),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = context.watch<ThemeCubit>().isDark;
@@ -284,6 +376,76 @@ class _SignedInViewState extends State<_SignedInView> {
               padding: const EdgeInsets.symmetric(vertical: 14),
             ),
             child: const Text('Çıkış Yap'),
+          ),
+
+          const SizedBox(height: 32),
+          Text(
+            'Hesabımı Yönet',
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: secondaryColor,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.5,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.error.withAlpha(60)),
+            ),
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withAlpha(20),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.trash,
+                      color: AppColors.error,
+                      size: 20,
+                    ),
+                  ),
+                  title: const Text('Bilgilerimi Sil'),
+                  subtitle: const Text('Bu hesaptaki bulut yedeğini sil'),
+                  onTap: _isBusy ? null : _deleteCloudData,
+                ),
+                Divider(
+                  height: 1,
+                  indent: 16,
+                  endIndent: 16,
+                  color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+                ),
+                ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withAlpha(20),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.person_crop_circle_badge_minus,
+                      color: AppColors.error,
+                      size: 20,
+                    ),
+                  ),
+                  title: const Text(
+                    'Hesabı Sil',
+                    style: TextStyle(
+                      color: AppColors.error,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  subtitle: const Text('Hesabını kalıcı olarak kaldır'),
+                  onTap: _isBusy ? null : _deleteAccount,
+                ),
+              ],
+            ),
           ),
         ],
       ),

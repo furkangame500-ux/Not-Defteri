@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 /// E-posta/şifre ile oturum açma servisi.
 class AuthService {
@@ -47,7 +48,59 @@ class AuthService {
     return credential.user;
   }
 
-  Future<void> signOut() => _auth.signOut();
+  Future<void> signOut() async {
+    await _auth.signOut();
+    try {
+      await GoogleSignIn().signOut();
+    } catch (_) {
+      // Google ile giriş yapılmamışsa görmezden gel.
+    }
+  }
+
+  /// Hesabı Firebase Authentication'dan kalıcı olarak siler.
+  ///
+  /// Firebase, güvenlik gereği son girişin "yakın zamanda" yapılmış
+  /// olmasını ister; aksi halde 'requires-recent-login' hatası fırlatır.
+  /// Bu durumda çağıran taraf kullanıcıyı tekrar oturum açmaya
+  /// yönlendirmelidir.
+  Future<void> deleteAccount() async {
+    _ensureConfigured();
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw StateError('Silinecek bir hesap bulunamadı.');
+    }
+    await user.delete();
+    try {
+      await GoogleSignIn().signOut();
+    } catch (_) {
+      // Google ile giriş yapılmamışsa görmezden gel.
+    }
+  }
+
+  /// Google hesabıyla giriş yapar. Kullanıcı seçim ekranını iptal ederse
+  /// null döner.
+  Future<User?> signInWithGoogle() async {
+    _ensureConfigured();
+
+    final googleSignIn = GoogleSignIn();
+    // Önceki oturumu temizle ki hesap seçici her seferinde açılsın.
+    await googleSignIn.signOut();
+
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) {
+      // Kullanıcı hesap seçim ekranını iptal etti.
+      return null;
+    }
+
+    final googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+      idToken: googleAuth.idToken,
+      accessToken: googleAuth.accessToken,
+    );
+
+    final userCredential = await _auth.signInWithCredential(credential);
+    return userCredential.user;
+  }
 
   void _ensureConfigured() {
     if (!isConfigured) {
@@ -79,6 +132,10 @@ class AuthService {
           return 'Bu e-posta adresi zaten kullanımda.';
         case 'weak-password':
           return 'Şifre çok zayıf. En az 6 karakter kullanın.';
+        case 'account-exists-with-different-credential':
+          return 'Bu e-posta adresi başka bir giriş yöntemiyle (ör. e-posta/şifre) zaten kayıtlı. Lütfen o yöntemle giriş yapın.';
+        case 'requires-recent-login':
+          return 'Bu işlem için güvenlik amacıyla yakın zamanda tekrar oturum açmanız gerekiyor. Lütfen çıkış yapıp tekrar giriş yapın ve tekrar deneyin.';
         case 'network-request-failed':
           return 'İnternet bağlantısı yok. Lütfen bağlantınızı kontrol edin.';
         default:

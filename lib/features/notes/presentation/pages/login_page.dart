@@ -71,6 +71,28 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Future<void> _submitGoogle() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+    try {
+      final user = await AuthService.instance.signInWithGoogle();
+      if (user != null) {
+        await _restoreCloudBackupIfAny();
+        if (mounted) Navigator.of(context).pop();
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = AuthService.messageForError(e);
+      });
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
   /// Bu hesaba ait buluttaki yedek varsa indirip yerel veriyle değiştirir
   /// ve ekrandaki not/klasör listelerini tazeler.
   Future<void> _restoreCloudBackupIfAny() async {
@@ -218,6 +240,52 @@ class _LoginPageState extends State<LoginPage> {
                   _isRegisterMode
                       ? 'Zaten hesabın var mı? Oturum aç'
                       : 'Hesabın yok mu? Hesap oluştur',
+                ),
+              ),
+
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      color: isDark
+                          ? AppColors.darkBorder
+                          : AppColors.lightBorder,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      'veya',
+                      style: TextStyle(
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : AppColors.lightTextSecondary,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Divider(
+                      color: isDark
+                          ? AppColors.darkBorder
+                          : AppColors.lightBorder,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              OutlinedButton.icon(
+                onPressed: _isLoading ? null : _submitGoogle,
+                icon: const Icon(CupertinoIcons.globe, size: 20),
+                label: const Text('Google ile Devam Et'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  side: BorderSide(
+                    color: isDark
+                        ? AppColors.darkBorder
+                        : AppColors.lightBorder,
+                  ),
                 ),
               ),
             ],

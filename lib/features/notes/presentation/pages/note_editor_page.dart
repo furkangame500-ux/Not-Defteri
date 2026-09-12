@@ -13,6 +13,7 @@ import 'package:path/path.dart' as p;
 import 'package:intl/intl.dart' hide TextDirection;
 import 'package:uuid/uuid.dart';
 import '../../../../core/constants/app_constants.dart';
+import '../../../../core/widgets/banner_ad_widget.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/theme_cubit.dart';
 import '../../domain/entities/note.dart';
@@ -411,6 +412,9 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
                         : _buildDesktopEditor(isDark, headerWidget))
                   : _buildReadOnlyContent(isDark, headerWidget),
             ),
+            // Reklam sadece görüntüleme modunda gösterilir; düzenleme
+            // sırasında klavye/araç çubuğuyla çakışmaması için gizlenir.
+            if (!_isEditing) const BannerAdWidget(),
           ],
         ),
       ),
